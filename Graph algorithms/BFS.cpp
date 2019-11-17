@@ -1,17 +1,19 @@
 #include<iostream>
 #include<vector>
+#include<queue>
 
 using namespace std;
 
 struct Node{
     int data;
     vector<int> adj;
-}
+};
 
 void BFS(const vector<Node>& graph, int start){
     vector<bool> marked(graph.size());
     queue<int> nextQue;
     nextQue.push(start);
+    marked[start] = true;
 
     while(!nextQue.empty()){
         int curr = nextQue.front();
@@ -30,7 +32,11 @@ void BFS(const vector<Node>& graph, int start){
 }
 
 int main(){
-    vector<int> graph(5);
+    vector<Node> graph(5);
+    
+    for(int i=0;i<graph.size();i++)
+        graph[i].data = i;
+
     graph[0].adj.push_back(1);
     graph[0].adj.push_back(2);
     graph[1].adj.push_back(3);
