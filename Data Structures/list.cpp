@@ -17,15 +17,21 @@ Node* createNode(int d){
 
 void addNode(Node** head, int d){
     Node* newN = createNode(d);
-    if((*head) == NULL){
-        *head = newN;
-        return;
+    while((*head) != NULL)
+        head = &((*head)->next);
+    *head = newN;
+}
+
+void deleteNode(Node** head, int d){
+    while((*head) != NULL){
+        if((*head)->data == d){
+            Node* target = *head;
+            *head = (*head)->next;
+            free(target);
+        }
+        else
+            head = &((*head)->next);
     }
-    Node* currN = *head;     
-    while(currN->next != NULL){
-        currN = currN->next;
-    }
-    currN->next = newN;
 }
 
 bool containsNode(Node** head, int d){
@@ -36,6 +42,45 @@ bool containsNode(Node** head, int d){
         currN = currN->next;
     }
     return false;
+}
+
+void printList(Node** head){
+    Node* currN = *head;
+    while(currN != NULL){
+        cout<< currN->data << " ";
+        currN = currN->next;
+    }
+    cout<< endl;
+}
+
+int main(){
+    Node* head = NULL;
+    addNode(&head, 1);
+    addNode(&head, 2);
+    addNode(&head, 3);
+    addNode(&head, 3);
+    addNode(&head, 4);
+ 
+    printList(&head);
+    deleteNode(&head, 5);
+    printList(&head);
+
+    return 0;
+}
+
+/*FIRST FLAVOUR OF ADD AND DELETE
+
+void addNode(Node** head, int d){
+    Node* newN = createNode(d);
+    if((*head) == NULL){
+        *head = newN;
+        return;
+    }
+    Node* currN = *head;     
+    while(currN->next != NULL){
+        currN = currN->next;
+    }
+    currN->next = newN;
 }
 
 void deleteNode(Node** head, int d){
@@ -54,28 +99,4 @@ void deleteNode(Node** head, int d){
         currN->next = (currN->next)->next;
         free(target);
     }
-}
-
-void printList(Node** head){
-    Node* currN = *head;
-    while(currN != NULL){
-        cout<< currN->data << " ";
-        currN = currN->next;
-    }
-    cout<< endl;
-}
-
-int main(){
-    Node* head = NULL;
-    addNode(&head, 1);
-    addNode(&head, 2);
-    addNode(&head, 3);
-    addNode(&head, 4);
- 
-    printList(&head);
-    cout<< containsNode(&head, 1) << endl << containsNode(&head, 0) << endl;
-    deleteNode(&head, 1);
-    printList(&head);
-
-    return 0;
-}
+}*/
